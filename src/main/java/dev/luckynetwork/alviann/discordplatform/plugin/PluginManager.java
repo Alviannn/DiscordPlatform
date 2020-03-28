@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -115,7 +116,6 @@ public class PluginManager {
     /**
      * unloads a plugin (discord bot)
      */
-    @SneakyThrows
     public synchronized void unloadPlugin(String name) {
         if (!pluginMap.containsKey(name))
             return;
@@ -130,7 +130,11 @@ public class PluginManager {
         Scheduler.closeAll(plugin);
 
         URLClassLoader loader = (URLClassLoader) plugin.getClass().getClassLoader();
-        loader.close();
+        try {
+            loader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         pluginMap.remove(name);
     }

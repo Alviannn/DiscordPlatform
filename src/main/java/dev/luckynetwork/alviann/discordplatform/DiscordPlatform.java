@@ -1,13 +1,11 @@
 package dev.luckynetwork.alviann.discordplatform;
 
 import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
-import com.github.alviannn.sqlhelper.utils.Closer;
+import dev.luckynetwork.alviann.discordplatform.logger.Logger;
 import dev.luckynetwork.alviann.discordplatform.plugin.PluginManager;
 import dev.luckynetwork.alviann.discordplatform.scheduler.Scheduler;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -24,7 +22,7 @@ public class DiscordPlatform {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @SneakyThrows
     public synchronized void start() {
-        logger = LoggerFactory.getLogger("DiscordPlatform");
+        logger = Logger.getLogger("DiscordPlatform");
         dependsFolder = new File("depends");
         pluginFolder = new File("plugins");
 
@@ -43,17 +41,17 @@ public class DiscordPlatform {
 
     public static void main(String[] args) {
         DiscordPlatform platform = new DiscordPlatform();
-
+        boolean stop = false;
         platform.start();
 
-        try (Closer closer = new Closer()) {
-            InputStream stream = closer.add(System.in);
-            Scanner scanner = closer.add(new Scanner(stream));
+        InputStream stream = System.in;
+        Scanner scanner = new Scanner(stream);
 
-            while (scanner.hasNext()) {
-                String line = scanner.nextLine().toLowerCase().trim();
+        while (scanner.hasNext()) {
+            String line = scanner.nextLine().toLowerCase().trim();
 
-                if (line.equals("stop") || line.equals("end")) {
+            if (line.equals("stop") || line.equals("end")) {
+                try {
                     Method plmCloseMethod = PluginManager.class.getDeclaredMethod("close");
                     plmCloseMethod.setAccessible(true);
                     plmCloseMethod.invoke(pluginManager);
@@ -63,14 +61,17 @@ public class DiscordPlatform {
                     schCloseMethod.invoke(null);
 
                     logger.info("Bye bye :3");
-                    break;
-                }
-                else {
-                    logger.info("Invalid command line!");
+                    stop = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            else {
+                logger.info("Invalid command line!");
+            }
+
+            if (stop)
+                break;
         }
     }
 
