@@ -1,13 +1,13 @@
 package dev.luckynetwork.alviann.discordplatform;
 
 import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
-import com.github.alviannn.sqlhelper.lib.slf4j.Logger;
-import com.github.alviannn.sqlhelper.lib.slf4j.LoggerFactory;
 import com.github.alviannn.sqlhelper.utils.Closer;
 import dev.luckynetwork.alviann.discordplatform.plugin.PluginManager;
 import dev.luckynetwork.alviann.discordplatform.scheduler.Scheduler;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
