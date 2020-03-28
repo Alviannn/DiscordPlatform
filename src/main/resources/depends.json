@@ -1,0 +1,65 @@
+{
+  "depends": [
+    {
+      "name": "SQLHelper-2.5.jar",
+      "url": "https://github.com/Alviannn/SQLHelper/releases/download/2.5/SQLHelper-2.5.jar"
+    },
+
+    {
+      "name": "jackson-databind-2.10.1.jar",
+      "url": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.10.1/jackson-databind-2.10.1.jar"
+    },
+    {
+      "name": "jackson-core-2.10.1.jar",
+      "url": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.10.1/jackson-core-2.10.1.jar"
+    },
+    {
+      "name": "jackson-annotations-2.10.1.jar",
+      "url": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.10.1/jackson-annotations-2.10.1.jar"
+    },
+
+    {
+      "name": "trove4j-3.0.3.jar",
+      "url": "https://repo1.maven.org/maven2/net/sf/trove4j/trove4j/3.0.3/trove4j-3.0.3.jar"
+    },
+    {
+      "name": "nv-websocket-client-2.9.jar",
+      "url": "https://repo1.maven.org/maven2/com/neovisionaries/nv-websocket-client/2.9/nv-websocket-client-2.9.jar"
+    },
+    {
+      "name": "slf4j-api-1.7.25.jar",
+      "url": "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar"
+    },
+    {
+      "name": "commons-collections4-4.1.jar",
+      "url": "https://repo1.maven.org/maven2/org/apache/commons/commons-collections4/4.1/commons-collections4-4.1.jar"
+    },
+
+    {
+      "name": "opus-java-api-1.0.4.jar",
+      "url": "https://jcenter.bintray.com/club/minnced/opus-java-api/1.0.4/opus-java-api-1.0.4.jar"
+    },
+    {
+      "name": "opus-java-natives-1.0.4.jar",
+      "url": "https://jcenter.bintray.com/club/minnced/opus-java-natives/1.0.4/opus-java-natives-1.0.4.jar"
+    },
+    {
+      "name": "jna-4.4.0.jar",
+      "url": "https://repo1.maven.org/maven2/net/java/dev/jna/jna/4.4.0/jna-4.4.0.jar"
+    },
+
+    {
+      "name": "jsr305-3.0.2.jar",
+      "url": "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"
+    },
+
+    {
+      "name": "jda-utilities-commons-3.0.3.jar",
+      "url": "https://dl.bintray.com/jagrosh/maven/com/jagrosh/jda-utilities-commons/3.0.3/jda-utilities-commons-3.0.3.jar"
+    },
+    {
+      "name": "JDA-4.1.1_126.jar",
+      "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_126/JDA-4.1.1_126.jar"
+    }
+  ]
+}

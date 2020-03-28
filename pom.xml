@@ -111,13 +111,6 @@
     </repositories>
 
     <dependencies>
-        <!-- Java Discord -->
-        <dependency>
-            <groupId>net.dv8tion</groupId>
-            <artifactId>JDA</artifactId>
-            <version>4.1.1_126</version>
-            <scope>compile</scope>
-        </dependency>
         <!-- DependencyHelper -->
         <dependency>
             <groupId>com.github.Alviannn</groupId>
@@ -139,12 +132,20 @@
             <version>4.4.1</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- JDA Wrapper -->
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>4.1.1_126</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- JDA Utilities-->
         <dependency>
             <groupId>com.jagrosh</groupId>
             <artifactId>jda-utilities-commons</artifactId>
             <version>3.0.2</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Lombok -->
