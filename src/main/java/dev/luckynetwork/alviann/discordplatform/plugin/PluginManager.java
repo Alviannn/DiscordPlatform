@@ -95,7 +95,12 @@ public class PluginManager {
 
         DiscordPlugin pluginInstance = (DiscordPlugin) instance;
         pluginInstance.init(description);
-        pluginInstance.onStart();
+
+        try {
+            pluginInstance.onStart();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         pluginMap.put(description.getName(), pluginInstance);
     }
@@ -117,7 +122,11 @@ public class PluginManager {
 
         DiscordPlugin plugin = pluginMap.get(name);
 
-        plugin.onShutdown();
+        try {
+            plugin.onShutdown();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Scheduler.closeAll(plugin);
 
         URLClassLoader loader = (URLClassLoader) plugin.getClass().getClassLoader();
