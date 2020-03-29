@@ -1,11 +1,11 @@
 package dev.luckynetwork.alviann.discordplatform.plugin;
 
 import dev.luckynetwork.alviann.discordplatform.DiscordPlatform;
+import dev.luckynetwork.alviann.discordplatform.logger.Logger;
 import lombok.Getter;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 public abstract class DiscordPlugin {
 
