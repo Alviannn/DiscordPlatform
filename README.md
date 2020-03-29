@@ -1,6 +1,25 @@
 ## Discord Platform
+[![](https://jitpack.io/v/Alviannn/DiscordPlatform.svg)](https://jitpack.io/#Alviannn/DiscordPlatform)
 
 This is a discord platform program, with this now you can host several discord bots all at once!
+
+##### To add this to your project (Maven):
+
+1. Add the repository to repositories section
+    ```xml
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+    ```
+2. Add the dependency to the dependencies section
+    ```xml
+    <dependency>
+        <groupId>com.github.Alviannn</groupId>
+        <artifactId>DiscordPlatform</artifactId>
+        <version>1.0</version>
+    </dependency>
+    ```
 
 ##### Code Example:
 ```java
@@ -30,11 +49,11 @@ public class MyBot extends DiscordPlugin {
             e.printStackTrace();
         }
     }
-
 }
 ```
 
 There's also a dependency configuration for you to manage :3 (from depends.json)
+<br>
 
 WARNING: the JDA isn't compiled within the program to decrease the file size <br>
 meaning that you have to keep the default config except for several dependencies <br>
