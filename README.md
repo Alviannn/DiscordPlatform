@@ -12,9 +12,6 @@ public class MyBot extends DiscordPlugin {
     public void onStart() {
         try {
             client = JDABuilder.createDefault("bot token")
-                .setActivity(Activity.playing(Utils.getMOTD()))
-                .addEventListeners(eventWaiter)
-                .addEventListeners(listener)
                 .build()
                 .awaitReady();
     
