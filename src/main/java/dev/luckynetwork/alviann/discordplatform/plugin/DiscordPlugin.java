@@ -1,6 +1,5 @@
 package dev.luckynetwork.alviann.discordplatform.plugin;
 
-import dev.luckynetwork.alviann.discordplatform.DiscordPlatform;
 import dev.luckynetwork.alviann.discordplatform.logger.Logger;
 import lombok.Getter;
 
@@ -18,7 +17,7 @@ public abstract class DiscordPlugin {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public File getDataFolder() {
-        File dataFolder = new File(DiscordPlatform.getPluginFolder(), description.getName());
+        File dataFolder = this.description.getDataFolder();
 
         if (!dataFolder.exists())
             dataFolder.mkdir();

@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.luckynetwork.alviann.discordplatform.logger.Logger;
+import dev.luckynetwork.alviann.discordplatform.plugin.DiscordPlugin;
 import dev.luckynetwork.alviann.discordplatform.plugin.PluginManager;
 import dev.luckynetwork.alviann.discordplatform.scheduler.Scheduler;
 import lombok.Getter;
@@ -17,9 +18,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class DiscordPlatform {
 
@@ -35,7 +34,7 @@ public class DiscordPlatform {
         dependsFolder = new File("depends");
         pluginFolder = new File("plugins");
 
-        JsonObject dependsConfig;
+        JsonArray depends;
         File dependsConfigFile = new File("depends.json");
 
         if (!dependsFolder.exists())
@@ -43,7 +42,8 @@ public class DiscordPlatform {
         if (!pluginFolder.exists())
             pluginFolder.mkdir();
 
-        try (InputStream resource = this.getClass().getClassLoader().getResourceAsStream("depends.json")) {
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        try (InputStream resource = classLoader.getResourceAsStream("depends.json")) {
             if (resource == null)
                 throw new NullPointerException("Cannot retrieve depends.json!");
 
@@ -52,24 +52,23 @@ public class DiscordPlatform {
         }
 
         try (FileReader reader = new FileReader(dependsConfigFile)) {
-            dependsConfig = JsonParser.parseReader(reader).getAsJsonObject();
+            depends = JsonParser.parseReader(reader).getAsJsonArray();
         }
 
-        if (dependsConfig == null)
+        if (depends == null)
             throw new FileNotFoundException("Missing depends.json!");
 
-        JsonArray dependsArray = dependsConfig.get("depends").getAsJsonArray();
-        Map<String, String> depends = new HashMap<>();
+        Map<String, String> retrievedDependencies = new HashMap<>();
 
-        for (JsonElement element : dependsArray) {
+        for (JsonElement element : depends) {
             JsonObject depend = element.getAsJsonObject();
-            depends.put(depend.get("name").getAsString(), depend.get("url").getAsString());
+            retrievedDependencies.put(depend.get("name").getAsString(), depend.get("url").getAsString());
         }
 
-        DependencyHelper depHelper = new DependencyHelper(this.getClass().getClassLoader());
+        DependencyHelper depHelper = new DependencyHelper(classLoader);
 
         logger.debug("Downloading dependencies...");
-        depHelper.download(depends, dependsFolder.toPath());
+        depHelper.download(retrievedDependencies, dependsFolder.toPath());
 
         logger.debug("Loading dependencies...");
         depHelper.loadDir(dependsFolder.toPath());
@@ -109,8 +108,13 @@ public class DiscordPlatform {
                     e.printStackTrace();
                 }
             }
-            else {
-                logger.info("Invalid command line!");
+            else if (line.equals("plugins")) {
+                List<String> pluginsName = new ArrayList<>();
+                for (DiscordPlugin plugin : pluginManager.getPlugins())
+                    pluginsName.add(plugin.getDescription().getName());
+
+                String message = "Plugins (" + pluginsName.size() + "): " +  String.join(", ", pluginsName);
+                logger.info(message);
             }
         }
     }

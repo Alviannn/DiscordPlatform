@@ -4,6 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class Logger {
@@ -15,27 +19,38 @@ public class Logger {
     }
 
     public void log(String message) {
-        System.out.println("[" + name + "]: " + message);
+        this.print("[" + name + "]: " + message);
     }
 
     public void debug(String message) {
-        System.out.println("[" + name + " - DEBUG]: " + message);
+        this.print("[" + name + " - DEBUG]: " + message);
     }
 
     public void info(String message) {
-        System.out.println("[" + name + " - INFO]: " + message);
+        this.print("[" + name + " - INFO]: " + message);
     }
 
     public void error(String message) {
-        System.out.println("[" + name + " - ERROR]: " + message);
+        this.print("[" + name + " - ERROR]: " + message);
     }
 
     public void warning(String message) {
-        System.out.println("[" + name + " - WARNING]: " + message);
+        this.print("[" + name + " - WARNING]: " + message);
     }
 
     public void severe(String message) {
-        System.out.println("[" + name + " - SEVERE]: " + message);
+        this.print("[" + name + " - SEVERE]: " + message);
+    }
+
+    private void print(String message) {
+        System.out.println("[" + this.getDateFormat() + "]" + message);
+    }
+
+    private String getDateFormat() {
+        DateFormat dateFormat = new SimpleDateFormat("YYYY/MM/dd - HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return dateFormat.format(System.currentTimeMillis());
     }
 
 }

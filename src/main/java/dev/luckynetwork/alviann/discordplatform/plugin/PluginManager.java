@@ -1,7 +1,9 @@
 package dev.luckynetwork.alviann.discordplatform.plugin;
 
+import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
 import com.github.alviannn.sqlhelper.utils.Closer;
 import dev.luckynetwork.alviann.discordplatform.DiscordPlatform;
+import dev.luckynetwork.alviann.discordplatform.logger.Logger;
 import dev.luckynetwork.alviann.discordplatform.scheduler.Scheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -46,10 +48,19 @@ public class PluginManager {
             PluginDescription description;
             try (Closer closer = new Closer()) {
                 JarFile jarFile = closer.add(new JarFile(file));
-                JarEntry entry = jarFile.getJarEntry("plugin.properties");
 
-                InputStream pluginDesc = jarFile.getInputStream(entry);
-                description = PluginDescription.load(file, pluginDesc);
+                JarEntry propEntry = jarFile.getJarEntry("plugin.properties");
+                JarEntry dependsEntry = jarFile.getJarEntry("depends.json");
+
+                InputStream pluginDesc = jarFile.getInputStream(propEntry);
+
+                if (dependsEntry != null) {
+                    InputStream dependencies = jarFile.getInputStream(dependsEntry);
+                    description = PluginDescription.load(file, pluginDesc, dependencies);
+                }
+                else {
+                    description = PluginDescription.load(file, pluginDesc, null);
+                }
             }
 
             if (description.getName() == null) {
@@ -88,6 +99,7 @@ public class PluginManager {
             throw new IllegalAccessException("Cannot load file that aren't .jar(s)!");
 
         ClassLoader pluginLoader = new URLClassLoader(new URL[]{pluginFile.toURI().toURL()}, classLoader);
+        this.loadDepends(description, pluginLoader);
         Class<?> main = pluginLoader.loadClass(description.getMainClass());
 
         Object instance = main.getDeclaredConstructor().newInstance();
@@ -121,15 +133,15 @@ public class PluginManager {
             return;
 
         DiscordPlugin plugin = pluginMap.get(name);
-
         try {
             plugin.onShutdown();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Scheduler.closeAll(plugin);
 
+        Scheduler.closeAll(plugin);
         URLClassLoader loader = (URLClassLoader) plugin.getClass().getClassLoader();
+
         try {
             loader.close();
         } catch (IOException e) {
@@ -139,6 +151,45 @@ public class PluginManager {
         pluginMap.remove(name);
     }
 
+    /**
+     * loads the dependencies for a specific plugin
+     */
+    @SneakyThrows
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public synchronized void loadDepends(PluginDescription description, ClassLoader loader) {
+        DependencyHelper depHelper = new DependencyHelper(loader);
+        Logger logger = Logger.getLogger(description.getName());
+
+        Map<String, String> dependsMap = description.getDepends();
+
+        if (dependsMap.size() == 0) {
+            logger.info("No dependencies found!");
+            return;
+        }
+
+        // creates the data folder earlier than expected for the plugin
+        File dataFolder = description.getDataFolder();
+        if (!dataFolder.exists())
+            dataFolder.mkdir();
+
+        // creates a depends folder inside the data folder
+        File dependsFolder = new File(dataFolder, "depends");
+        if (!dependsFolder.exists())
+            dependsFolder.mkdir();
+
+        // downloads and loads the dependencies if exists
+        logger.info("Downloading dependencies...");
+        depHelper.download(dependsMap, dependsFolder.toPath());
+
+        logger.info("Loading dependencies...");
+        depHelper.loadDir(dependsFolder.toPath());
+
+        logger.info("Finished loading dependencies!");
+    }
+
+    /**
+     * gets the exisiting plugins
+     */
     public Collection<DiscordPlugin> getPlugins() {
         return pluginMap.values();
     }

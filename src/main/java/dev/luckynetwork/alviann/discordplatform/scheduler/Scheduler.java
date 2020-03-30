@@ -60,7 +60,11 @@ public class Scheduler {
         return new TimerTask() {
             @Override
             public void run() {
-                runnable.run();
+                try {
+                    runnable.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
     }
