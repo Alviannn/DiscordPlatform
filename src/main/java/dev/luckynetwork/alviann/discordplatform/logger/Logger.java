@@ -1,5 +1,6 @@
 package dev.luckynetwork.alviann.discordplatform.logger;
 
+import dev.luckynetwork.alviann.discordplatform.color.ColoredWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
+@SuppressWarnings("unused")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class Logger {
@@ -19,31 +21,36 @@ public class Logger {
     }
 
     public void log(String message) {
-        this.print("[" + name + "]: " + message);
+        this.log(Level.NONE, message);
+    }
+
+    public void log(Level level, String message) {
+        this.print(level.getColor() + "[" + this.getDateFormat() + "][" + name + " - " + level.getName() + "]: " + message);
     }
 
     public void debug(String message) {
-        this.print("[" + name + " - DEBUG]: " + message);
+        this.log(Level.DEBUG, message);
     }
 
     public void info(String message) {
-        this.print("[" + name + " - INFO]: " + message);
-    }
-
-    public void error(String message) {
-        this.print("[" + name + " - ERROR]: " + message);
+        this.log(Level.INFO, message);
     }
 
     public void warning(String message) {
-        this.print("[" + name + " - WARNING]: " + message);
+        this.log(Level.WARNING, message);
+    }
+
+    public void error(String message) {
+        this.log(Level.ERROR, message);
     }
 
     public void severe(String message) {
-        this.print("[" + name + " - SEVERE]: " + message);
+        this.log(Level.SEVERE, message);
     }
 
     private void print(String message) {
-        System.out.println("[" + this.getDateFormat() + "]" + message);
+        String format = ColoredWriter.format(message);
+        System.out.println(format);
     }
 
     private String getDateFormat() {

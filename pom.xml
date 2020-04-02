@@ -6,7 +6,7 @@
 
     <groupId>dev.luckynetwork.alviann.discordplatform</groupId>
     <artifactId>DiscordPlatform</artifactId>
-    <version>1.2.1</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
 
     <developers>
@@ -169,6 +169,13 @@
             <artifactId>annotations</artifactId>
             <version>19.0.0</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- Jansi for console color -->
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>1.18</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

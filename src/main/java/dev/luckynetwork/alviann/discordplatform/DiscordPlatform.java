@@ -12,6 +12,7 @@ import dev.luckynetwork.alviann.discordplatform.plugin.PluginManager;
 import dev.luckynetwork.alviann.discordplatform.scheduler.Scheduler;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,6 +32,8 @@ public class DiscordPlatform {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @SneakyThrows
     public synchronized void start() {
+        AnsiConsole.systemInstall();
+
         logger = Logger.getLogger("DiscordPlatform");
         dependsFolder = new File("depends");
         pluginFolder = new File("plugins");
@@ -112,6 +115,8 @@ public class DiscordPlatform {
                         Method schCloseMethod = Scheduler.class.getDeclaredMethod("close");
                         schCloseMethod.setAccessible(true);
                         schCloseMethod.invoke(null);
+
+                        AnsiConsole.systemUninstall();
 
                         logger.info("Bye bye :3");
                         System.exit(0);
@@ -230,10 +235,16 @@ public class DiscordPlatform {
                     if (selectedPlugin == null)
                         continue;
 
-                    selectedPlugin.onConsoleCommand(command, args);
+                    try {
+                        selectedPlugin.onConsoleCommand(command, args);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
             }
+
+            AnsiConsole.systemUninstall();
         }
     }
 
