@@ -15,6 +15,16 @@ public abstract class DiscordPlugin {
 
     public abstract void onShutdown();
 
+    /**
+     * listens to a command execution inside the console
+     *
+     * <p>this follows the plugin.properties inside the plugin
+     * if there are none then it won't do anything</p>
+     */
+    public void onConsoleCommand(String[] args) {
+
+    }
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public File getDataFolder() {
         File dataFolder = this.description.getDataFolder();

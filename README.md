@@ -17,7 +17,7 @@ This is a discord platform program, with this now you can host several discord b
     <dependency>
         <groupId>com.github.Alviannn</groupId>
         <artifactId>DiscordPlatform</artifactId>
-        <version>1.0</version>
+        <version>1.2</version>
     </dependency>
     ```
 
@@ -34,7 +34,7 @@ public class MyBot extends DiscordPlugin {
                 .build()
                 .awaitReady();
     
-            System.out.println("I have started :v");
+            this.getLogger().info("I have started :v");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,11 +44,17 @@ public class MyBot extends DiscordPlugin {
     public void onShutdown() {
         try {
             client.shutdownNow();
-            System.out.println("Bye bye T-T");
+            this.getLogger().info("Bye bye T-T");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void onConsoleCommand(String[] args) {
+        this.getLogger().info("My command has been executed");
+    }
+
 }
 ```
 
@@ -71,6 +77,27 @@ like inside the code block below.
     }
   ]
 }
+```
+
+To load a discord bot using DiscordPlatform you need to add a file called `plugin.properties`
+inside the jar file
+
+This is a sample `plugin.properties`
+```properties
+# (required) the plugin name
+name=DiscordPlatform
+# (required) the plugin main class
+main=dev.luckynetwork.alviann.discordplatform.DiscordPlatform
+# (optional) the plugin version
+version=1.2
+# (optional) tells the plugin author
+author=Alviann
+# (optional) the plugin description
+description=this is a discord loader platform
+# (optional) the command prefix to be executed in console
+command=discordplatform
+# (optional) the command aliases to be executed in console
+command-aliases=platform,manager,dplatform
 ```
 
 If there are any bugs please let me know! <br>

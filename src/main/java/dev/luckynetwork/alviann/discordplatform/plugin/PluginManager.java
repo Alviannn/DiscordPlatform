@@ -63,12 +63,17 @@ public class PluginManager {
                 }
             }
 
+            Logger logger = DiscordPlatform.getLogger();
             if (description.getName() == null) {
-                DiscordPlatform.getLogger().debug("Plugin from " + file.getName() + " has no 'name'!");
+                logger.debug("Discord bot from " + file.getName() + " has no 'name'!");
                 continue;
             }
             if (description.getMainClass() == null) {
-                DiscordPlatform.getLogger().debug("Plugin from " + file.getName() + " has no 'main'!");
+                logger.debug("Discord bot from " + file.getName() + " has no 'main'!");
+                continue;
+            }
+            if (description.getCommand() == null && description.getCommandAliases().length > 0) {
+                logger.debug("Discord bot from " + file.getName() + " has no 'command' but has 'command-aliases'!");
                 continue;
             }
 
@@ -116,6 +121,15 @@ public class PluginManager {
         }
 
         pluginMap.put(description.getName(), pluginInstance);
+        Logger logger = DiscordPlatform.getLogger();
+
+        String loadedMessage = "Loaded plugin " + description.getName();
+        if (description.getVersion() != null)
+            loadedMessage += " version " + description.getVersion();
+        if (description.getAuthor() != null)
+            loadedMessage += " by " + description.getAuthor();
+
+        logger.debug(loadedMessage);
     }
 
     public synchronized void loadPlugins() {
@@ -149,6 +163,8 @@ public class PluginManager {
         }
 
         pluginMap.remove(name);
+
+        DiscordPlatform.getLogger().debug("Unloaded plugin " + plugin.getDescription().getName());
     }
 
     /**
