@@ -5,14 +5,21 @@ import lombok.Getter;
 
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 
 public abstract class DiscordPlugin {
 
     @Getter private Logger logger;
     @Getter private PluginDescription description;
 
+    /**
+     * this method will be called on plugin start
+     */
     public abstract void onStart();
 
+    /**
+     * this method will be called on plugin shutdown
+     */
     public abstract void onShutdown();
 
     /**
@@ -25,6 +32,9 @@ public abstract class DiscordPlugin {
 
     }
 
+    /**
+     * gets the data folder for this plugin
+     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public File getDataFolder() {
         File dataFolder = this.description.getDataFolder();
@@ -35,10 +45,36 @@ public abstract class DiscordPlugin {
         return dataFolder;
     }
 
+    /**
+     * gets a resource in a shape of InputStream from the current jar file
+     *
+     * <p>Here's for more explanation {@link ClassLoader#getResourceAsStream(String)}</p>
+     *
+     * @param name the file name
+     */
     public InputStream getResource(String name) {
         return this.getClass().getClassLoader().getResourceAsStream(name);
     }
 
+    /**
+     * sends a message to the console, it's like using the {@code System.out.println}
+     * but with the ability to use colors
+     *
+     * @param message the message
+     */
+    public void sendToConsole(String message) {
+        try {
+            Method printMethod = Logger.class.getDeclaredMethod("print", String.class);
+            printMethod.setAccessible(true);
+
+            printMethod.invoke(logger, message);
+        } catch (Exception ignored) {
+        }
+    }
+
+    /**
+     * initializes the plugin
+     */
     void init(PluginDescription description) {
         this.logger = Logger.getLogger(description.getName());
         this.description = description;

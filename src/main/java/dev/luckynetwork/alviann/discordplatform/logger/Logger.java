@@ -21,7 +21,7 @@ public class Logger {
     }
 
     public void log(String message) {
-        this.log(Level.NONE, message);
+        this.print(Level.NONE.getColor() + "[" + this.getDateFormat() + "][" + name + "]: " + message);
     }
 
     public void log(Level level, String message) {
