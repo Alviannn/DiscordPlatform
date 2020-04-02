@@ -21,7 +21,7 @@ public abstract class DiscordPlugin {
      * <p>this follows the plugin.properties inside the plugin
      * if there are none then it won't do anything</p>
      */
-    public void onConsoleCommand(String[] args) {
+    public void onConsoleCommand(String command, String[] args) {
 
     }
 

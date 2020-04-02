@@ -206,7 +206,7 @@ public class DiscordPlatform {
                     DiscordPlugin selectedPlugin = null;
 
                     for (DiscordPlugin plugin : plugins) {
-                        String prefix = plugin.getDescription().getName();
+                        String prefix = plugin.getDescription().getCommand();
                         String[] prefixAliases = plugin.getDescription().getCommandAliases();
 
                         if (command.equals(prefix)) {
@@ -230,7 +230,7 @@ public class DiscordPlatform {
                     if (selectedPlugin == null)
                         continue;
 
-                    selectedPlugin.onConsoleCommand(args);
+                    selectedPlugin.onConsoleCommand(command, args);
                     break;
                 }
             }
