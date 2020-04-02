@@ -1,5 +1,6 @@
 package dev.luckynetwork.alviann.discordplatform.plugin;
 
+import dev.luckynetwork.alviann.discordplatform.color.ColoredWriter;
 import dev.luckynetwork.alviann.discordplatform.logger.Logger;
 import lombok.Getter;
 
@@ -63,13 +64,7 @@ public abstract class DiscordPlugin {
      * @param message the message
      */
     public void sendToConsole(String message) {
-        try {
-            Method printMethod = Logger.class.getDeclaredMethod("print", String.class);
-            printMethod.setAccessible(true);
-
-            printMethod.invoke(logger, message);
-        } catch (Exception ignored) {
-        }
+        System.out.println(ColoredWriter.format(message));
     }
 
     /**
