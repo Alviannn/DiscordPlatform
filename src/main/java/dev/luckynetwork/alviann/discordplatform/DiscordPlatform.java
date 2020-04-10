@@ -5,7 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dev.luckynetwork.alviann.discordplatform.logger.Level;
 import dev.luckynetwork.alviann.discordplatform.logger.Logger;
+import dev.luckynetwork.alviann.discordplatform.logger.LoggerOutputStream;
 import dev.luckynetwork.alviann.discordplatform.plugin.DiscordPlugin;
 import dev.luckynetwork.alviann.discordplatform.plugin.PluginDescription;
 import dev.luckynetwork.alviann.discordplatform.plugin.PluginManager;
@@ -14,10 +16,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.fusesource.jansi.AnsiConsole;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.util.*;
@@ -25,18 +24,30 @@ import java.util.*;
 public class DiscordPlatform {
 
     @Getter private static Logger logger;
+    @Getter private static PluginManager pluginManager;
+
     @Getter private static File dependsFolder;
     @Getter private static File pluginFolder;
-    @Getter private static PluginManager pluginManager;
+    @Getter private static File logsFolder;
+
+    @Getter private static PrintStream consoleStream;
+    @Getter private static PrintStream errorStream;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @SneakyThrows
     public synchronized void start() {
+        consoleStream = System.out;
+        errorStream = System.err;
+
         AnsiConsole.systemInstall();
 
         logger = Logger.getLogger("DiscordPlatform");
         dependsFolder = new File("depends");
         pluginFolder = new File("plugins");
+        logsFolder = new File("logs");
+
+        System.setOut(new PrintStream(new LoggerOutputStream(Logger.getLogger(null), Level.INFO)));
+        System.setErr(new PrintStream(new LoggerOutputStream(Logger.getLogger(null), Level.ERROR)));
 
         JsonArray depends;
         File dependsConfigFile = new File("depends.json");
@@ -63,7 +74,6 @@ public class DiscordPlatform {
             throw new FileNotFoundException("Missing depends.json!");
 
         Map<String, String> retrievedDependencies = new HashMap<>();
-
         for (JsonElement element : depends) {
             JsonObject depend = element.getAsJsonObject();
             retrievedDependencies.put(depend.get("name").getAsString(), depend.get("url").getAsString());
@@ -115,14 +125,14 @@ public class DiscordPlatform {
                         Method schCloseMethod = Scheduler.class.getDeclaredMethod("close");
                         schCloseMethod.setAccessible(true);
                         schCloseMethod.invoke(null);
-
-                        AnsiConsole.systemUninstall();
-
-                        logger.info("Bye bye :3");
-                        System.exit(0);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
+                    AnsiConsole.systemUninstall();
+
+                    logger.info("Bye bye :3");
+                    System.exit(0);
                     break;
                 }
                 case "plugins": {

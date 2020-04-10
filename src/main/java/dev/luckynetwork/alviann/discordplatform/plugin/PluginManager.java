@@ -163,7 +163,6 @@ public class PluginManager {
         }
 
         pluginMap.remove(name);
-
         DiscordPlatform.getLogger().debug("Unloaded plugin " + plugin.getDescription().getName());
     }
 

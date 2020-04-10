@@ -2,6 +2,8 @@ package dev.luckynetwork.alviann.discordplatform.color;
 
 import lombok.Getter;
 
+import java.util.regex.Pattern;
+
 /**
  * from BungeeCord source code
  */
@@ -96,8 +98,11 @@ public enum ChatColor {
      */
     RESET('r', "reset");
 
-    public static final String COLOR_CHAR = "§";
+    public static final String COLOR_CHAR_1 = "§";
     public static final String COLOR_CHAR_2 = "&";
+
+    public static final Pattern STRIP_COLOR_PATTERN_1 = Pattern.compile("(?i)" + COLOR_CHAR_1 + "[0-9A-FK-OR]");
+    public static final Pattern STRIP_COLOR_PATTERN_2 = Pattern.compile("(?i)" + COLOR_CHAR_2 + "[0-9A-FK-OR]");
 
     @Getter private final String type1;
     @Getter private final String type2;
@@ -105,12 +110,28 @@ public enum ChatColor {
 
     ChatColor(char code, String name) {
         this.name = name;
-        this.type1 = COLOR_CHAR + code;
+        this.type1 = COLOR_CHAR_1 + code;
         this.type2 = COLOR_CHAR_2 + code;
     }
 
     @Override
     public String toString() {
         return this.type1;
+    }
+
+    /**
+     * Strips the given message of all color codes
+     *
+     * @param input String to strip of color
+     * @return A copy of the input string, without any coloring
+     */
+    public static String stripColor(String input) {
+        if (input == null)
+            return null;
+
+        input = STRIP_COLOR_PATTERN_1.matcher(input).replaceAll("");
+        input = STRIP_COLOR_PATTERN_2.matcher(input).replaceAll("");
+
+        return input;
     }
 }

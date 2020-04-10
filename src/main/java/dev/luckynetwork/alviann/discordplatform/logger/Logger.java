@@ -1,10 +1,16 @@
 package dev.luckynetwork.alviann.discordplatform.logger;
 
+import dev.luckynetwork.alviann.discordplatform.DiscordPlatform;
+import dev.luckynetwork.alviann.discordplatform.color.ChatColor;
 import dev.luckynetwork.alviann.discordplatform.color.ColoredWriter;
 import lombok.AccessLevel;
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
@@ -21,11 +27,17 @@ public class Logger {
     }
 
     public void log(String message) {
-        this.print(Level.NONE.getColor() + "[" + this.getDateFormat() + "][" + name + "]: " + message);
+        if (name == null || name.trim().isEmpty())
+            this.print(Level.NONE.getColor() + "[" + this.getDateFormat() + "]: " + message);
+        else
+            this.print(Level.NONE.getColor() + "[" + this.getDateFormat() + "][" + name + "]: " + message);
     }
 
     public void log(Level level, String message) {
-        this.print(level.getColor() + "[" + this.getDateFormat() + "][" + name + " - " + level.getName() + "]: " + message);
+        if (name == null || name.trim().isEmpty())
+            this.print(level.getColor() + "[" + this.getDateFormat() + "][" + level.getName() + "]: " + message);
+        else
+            this.print(level.getColor() + "[" + this.getDateFormat() + "][" + name + " - " + level.getName() + "]: " + message);
     }
 
     public void debug(String message) {
@@ -48,16 +60,41 @@ public class Logger {
         this.log(Level.SEVERE, message);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void print(String message) {
         String format = ColoredWriter.format(message);
-        System.out.println(format);
+        DiscordPlatform.getConsoleStream().println(format);
+
+        File logsFolder = DiscordPlatform.getLogsFolder();
+        if (!logsFolder.exists())
+            logsFolder.mkdir();
+
+        String dateFormat = this.getDateFormat("yyyy-MM-dd");
+        File logsFile = new File(logsFolder, dateFormat + ".log");
+
+        try {
+            if (!logsFile.exists())
+                logsFile.createNewFile();
+
+            @Cleanup FileWriter fw = new FileWriter(logsFile, true);
+            @Cleanup PrintWriter writer = new PrintWriter(fw, true);
+
+            writer.println(ChatColor.stripColor(message));
+            writer.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private String getDateFormat() {
-        DateFormat dateFormat = new SimpleDateFormat("YYYY/MM/dd - HH:mm:ss");
+    private String getDateFormat(String pattern) {
+        DateFormat dateFormat = new SimpleDateFormat(pattern);
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         return dateFormat.format(System.currentTimeMillis());
+    }
+
+    private String getDateFormat() {
+        return this.getDateFormat("yyyy/MM/dd - HH:mm:ss");
     }
 
 }
