@@ -1,5 +1,4 @@
 ## Discord Platform
-[![](https://jitpack.io/v/Alviannn/DiscordPlatform.svg)](https://jitpack.io/#Alviannn/DiscordPlatform)
 
 This is a discord platform program, with this now you can host several discord bots all at once!
 
