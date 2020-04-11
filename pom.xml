@@ -138,7 +138,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.1.1_134</version>
+            <version>4.1.1_135</version>
             <scope>provided</scope>
         </dependency>
 
