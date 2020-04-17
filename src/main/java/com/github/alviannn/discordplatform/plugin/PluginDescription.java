@@ -1,11 +1,11 @@
-package dev.luckynetwork.alviann.discordplatform.plugin;
+package com.github.alviannn.discordplatform.plugin;
 
+import com.github.alviannn.discordplatform.DiscordPlatform;
 import com.github.alviannn.sqlhelper.utils.Closer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dev.luckynetwork.alviann.discordplatform.DiscordPlatform;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

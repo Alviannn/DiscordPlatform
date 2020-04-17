@@ -71,7 +71,7 @@ inside the jar file.
 # (required) the plugin name
 name=DiscordPlatform
 # (required) the plugin main class
-main=dev.luckynetwork.alviann.discordplatform.DiscordPlatform
+main=com.github.alviannn.discordplatform.DiscordPlatform
 # (optional) the plugin version
 version=1.3.3
 # (optional) tells the plugin author

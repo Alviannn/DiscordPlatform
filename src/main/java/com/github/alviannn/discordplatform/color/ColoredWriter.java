@@ -1,4 +1,4 @@
-package dev.luckynetwork.alviann.discordplatform.color;
+package com.github.alviannn.discordplatform.color;
 
 import lombok.RequiredArgsConstructor;
 import org.fusesource.jansi.Ansi;

@@ -1,6 +1,6 @@
-package dev.luckynetwork.alviann.discordplatform.logger;
+package com.github.alviannn.discordplatform.logger;
 
-import dev.luckynetwork.alviann.discordplatform.color.ChatColor;
+import com.github.alviannn.discordplatform.color.ChatColor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

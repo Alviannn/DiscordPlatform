@@ -1,12 +1,11 @@
-package dev.luckynetwork.alviann.discordplatform.plugin;
+package com.github.alviannn.discordplatform.plugin;
 
-import dev.luckynetwork.alviann.discordplatform.color.ColoredWriter;
-import dev.luckynetwork.alviann.discordplatform.logger.Logger;
+import com.github.alviannn.discordplatform.color.ColoredWriter;
+import com.github.alviannn.discordplatform.logger.Logger;
 import lombok.Getter;
 
 import java.io.File;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 
 public abstract class DiscordPlugin {
 

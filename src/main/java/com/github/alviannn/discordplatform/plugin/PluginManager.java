@@ -1,10 +1,10 @@
-package dev.luckynetwork.alviann.discordplatform.plugin;
+package com.github.alviannn.discordplatform.plugin;
 
+import com.github.alviannn.discordplatform.DiscordPlatform;
+import com.github.alviannn.discordplatform.logger.Logger;
+import com.github.alviannn.discordplatform.scheduler.Scheduler;
 import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
 import com.github.alviannn.sqlhelper.utils.Closer;
-import dev.luckynetwork.alviann.discordplatform.DiscordPlatform;
-import dev.luckynetwork.alviann.discordplatform.logger.Logger;
-import dev.luckynetwork.alviann.discordplatform.scheduler.Scheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 

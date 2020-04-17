@@ -1,17 +1,17 @@
-package dev.luckynetwork.alviann.discordplatform;
+package com.github.alviannn.discordplatform;
 
+import com.github.alviannn.discordplatform.plugin.DiscordPlugin;
+import com.github.alviannn.discordplatform.scheduler.Scheduler;
 import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dev.luckynetwork.alviann.discordplatform.logger.Level;
-import dev.luckynetwork.alviann.discordplatform.logger.Logger;
-import dev.luckynetwork.alviann.discordplatform.logger.LoggerOutputStream;
-import dev.luckynetwork.alviann.discordplatform.plugin.DiscordPlugin;
-import dev.luckynetwork.alviann.discordplatform.plugin.PluginDescription;
-import dev.luckynetwork.alviann.discordplatform.plugin.PluginManager;
-import dev.luckynetwork.alviann.discordplatform.scheduler.Scheduler;
+import com.github.alviannn.discordplatform.logger.Level;
+import com.github.alviannn.discordplatform.logger.Logger;
+import com.github.alviannn.discordplatform.logger.LoggerOutputStream;
+import com.github.alviannn.discordplatform.plugin.PluginDescription;
+import com.github.alviannn.discordplatform.plugin.PluginManager;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.fusesource.jansi.AnsiConsole;

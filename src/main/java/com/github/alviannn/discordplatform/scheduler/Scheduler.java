@@ -1,6 +1,6 @@
-package dev.luckynetwork.alviann.discordplatform.scheduler;
+package com.github.alviannn.discordplatform.scheduler;
 
-import dev.luckynetwork.alviann.discordplatform.plugin.DiscordPlugin;
+import com.github.alviannn.discordplatform.plugin.DiscordPlugin;
 
 import java.util.*;
 

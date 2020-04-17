@@ -1,8 +1,8 @@
-package dev.luckynetwork.alviann.discordplatform.logger;
+package com.github.alviannn.discordplatform.logger;
 
-import dev.luckynetwork.alviann.discordplatform.DiscordPlatform;
-import dev.luckynetwork.alviann.discordplatform.color.ChatColor;
-import dev.luckynetwork.alviann.discordplatform.color.ColoredWriter;
+import com.github.alviannn.discordplatform.DiscordPlatform;
+import com.github.alviannn.discordplatform.color.ChatColor;
+import com.github.alviannn.discordplatform.color.ColoredWriter;
 import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.Getter;

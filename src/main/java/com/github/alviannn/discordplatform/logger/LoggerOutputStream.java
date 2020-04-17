@@ -1,4 +1,4 @@
-package dev.luckynetwork.alviann.discordplatform.logger;
+package com.github.alviannn.discordplatform.logger;
 
 import lombok.RequiredArgsConstructor;
 
