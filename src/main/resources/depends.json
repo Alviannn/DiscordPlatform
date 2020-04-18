@@ -53,6 +53,38 @@
   },
 
   {
+    "name": "kotlin-stdlib-1.3.72.jar",
+    "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.3.72/kotlin-stdlib-1.3.72.jar"
+  },
+  {
+    "name": "kotlin-stdlib-common-1.3.72.jar",
+    "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.3.72/kotlin-stdlib-common-1.3.72.jar"
+  },
+
+  {
+    "name": "kotlin-stdlib-jdk8-1.3.72.jar",
+    "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.3.72/kotlin-stdlib-jdk8-1.3.72.jar"
+  },
+  {
+    "name": "kotlin-stdlib-jdk7-1.3.72.jar",
+    "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.3.72/kotlin-stdlib-jdk7-1.3.72.jar"
+  },
+
+  {
+    "name": "annotations-19.0.0.jar",
+    "url": "https://repo1.maven.org/maven2/org/jetbrains/annotations/19.0.0/annotations-19.0.0.jar"
+  },
+
+  {
+    "name": "okio-2.5.0.jar",
+    "url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/2.5.0/okio-2.5.0.jar"
+  },
+  {
+    "name": "okhttp-4.5.0.jar",
+    "url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.5.0/okhttp-4.5.0.jar"
+  },
+
+  {
     "name": "JDA-4.1.1_136.jar",
     "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_136/JDA-4.1.1_136.jar"
   }
