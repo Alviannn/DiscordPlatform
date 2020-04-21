@@ -1,7 +1,7 @@
 [
   {
-    "name": "SQLHelper-2.5.2.jar",
-    "url": "https://jitpack.io/com/github/Alviannn/SQLHelper/2.5.2/SQLHelper-2.5.2.jar"
+    "name": "SQLHelper-2.5.3.jar",
+    "url": "https://jitpack.io/com/github/Alviannn/SQLHelper/2.5.3/SQLHelper-2.5.3.jar"
   },
 
   {
@@ -85,7 +85,7 @@
   },
 
   {
-    "name": "JDA-4.1.1_136.jar",
-    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_136/JDA-4.1.1_136.jar"
+    "name": "JDA-4.1.1_137.jar",
+    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_137/JDA-4.1.1_137.jar"
   }
 ]
