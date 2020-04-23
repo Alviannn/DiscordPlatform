@@ -49,7 +49,7 @@ public class Scheduler {
         SCHEDULE_MAP.remove(plugin);
     }
 
-    private static void close() {
+    public static void closeAll() {
         for (DiscordPlugin plugin : SCHEDULE_MAP.keySet())
             closeAll(plugin);
 

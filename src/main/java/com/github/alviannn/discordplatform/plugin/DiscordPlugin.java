@@ -1,12 +1,12 @@
 package com.github.alviannn.discordplatform.plugin;
 
-import com.github.alviannn.discordplatform.color.ColoredWriter;
 import com.github.alviannn.discordplatform.logger.Logger;
 import lombok.Getter;
 
 import java.io.File;
 import java.io.InputStream;
 
+@SuppressWarnings("unused")
 public abstract class DiscordPlugin {
 
     @Getter private Logger logger;
@@ -63,7 +63,7 @@ public abstract class DiscordPlugin {
      * @param message the message
      */
     public void sendToConsole(String message) {
-        System.out.println(ColoredWriter.format(message));
+        System.out.println(message);
     }
 
     /**

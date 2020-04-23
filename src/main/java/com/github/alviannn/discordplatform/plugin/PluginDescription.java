@@ -38,6 +38,7 @@ public class PluginDescription {
         Map<String, String> dependsMap = new HashMap<>();
 
         try (Closer closer = new Closer()) {
+            closer.add(propStream);
             InputStreamReader reader = closer.add(new InputStreamReader(propStream));
             description.load(reader);
 

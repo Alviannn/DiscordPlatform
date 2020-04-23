@@ -89,21 +89,19 @@ public class PluginManager {
     @SneakyThrows
     public synchronized void loadPlugin(String name) {
         Map<String, PluginDescription> descriptionMap = this.detectPlugins();
-
         PluginDescription description = descriptionMap.get(name);
-        ClassLoader classLoader = plugin.getClass().getClassLoader();
-
         if (description == null)
             throw new FileNotFoundException("Cannot find " + name + " plugin!");
 
         File pluginFile = description.getPluginFile();
-
         if (!pluginFile.exists())
             throw new FileNotFoundException("Cannot file " + pluginFile.getName() + "!");
         if (!pluginFile.getName().endsWith(".jar"))
             throw new IllegalAccessException("Cannot load file that aren't .jar(s)!");
 
+        ClassLoader classLoader = plugin.getClass().getClassLoader();
         ClassLoader pluginLoader = new URLClassLoader(new URL[]{pluginFile.toURI().toURL()}, classLoader);
+
         this.loadDepends(description, pluginLoader);
         Class<?> main = pluginLoader.loadClass(description.getMainClass());
 
@@ -118,6 +116,7 @@ public class PluginManager {
             pluginInstance.onStart();
         } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
 
         pluginMap.put(description.getName(), pluginInstance);
@@ -147,15 +146,14 @@ public class PluginManager {
             return;
 
         DiscordPlugin plugin = pluginMap.get(name);
+        Scheduler.closeAll(plugin);
         try {
             plugin.onShutdown();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Scheduler.closeAll(plugin);
         URLClassLoader loader = (URLClassLoader) plugin.getClass().getClassLoader();
-
         try {
             loader.close();
         } catch (IOException e) {
@@ -164,6 +162,9 @@ public class PluginManager {
 
         pluginMap.remove(name);
         DiscordPlatform.getLogger().debug("Unloaded plugin " + plugin.getDescription().getName());
+
+        // clears the leftovers
+        System.gc();
     }
 
     /**
@@ -209,8 +210,9 @@ public class PluginManager {
         return pluginMap.values();
     }
 
-    private void close() {
+    public void unloadAllPlugins() {
         List<DiscordPlugin> plugins = new ArrayList<>(this.getPlugins());
+
         for (DiscordPlugin plugin : plugins)
             this.unloadPlugin(plugin.getDescription().getName());
 

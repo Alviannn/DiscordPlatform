@@ -61,7 +61,7 @@ public class Logger {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void print(String message) {
+    public void print(String message) {
         String format = ColoredWriter.format(message);
         DiscordPlatform.getConsoleStream().println(format);
 
