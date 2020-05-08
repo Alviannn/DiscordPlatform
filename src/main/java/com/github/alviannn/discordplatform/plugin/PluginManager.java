@@ -22,12 +22,11 @@ import java.util.jar.JarFile;
 public class PluginManager {
 
     private final DiscordPlatform plugin;
-    private Map<String, DiscordPlugin> pluginMap = new HashMap<>();
+    private final Map<String, DiscordPlugin> pluginMap = new HashMap<>();
 
     /**
      * detects all possible plugins on the plugins folder
      */
-    @SuppressWarnings("ConstantConditions")
     @SneakyThrows
     private Map<String, PluginDescription> detectPlugins() {
         Map<String, PluginDescription> descriptions = new HashMap<>();

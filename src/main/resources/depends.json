@@ -76,16 +76,16 @@
   },
 
   {
-    "name": "okio-2.5.0.jar",
-    "url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/2.5.0/okio-2.5.0.jar"
+    "name": "okio-2.6.0.jar",
+    "url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/2.6.0/okio-2.6.0.jar"
   },
   {
-    "name": "okhttp-4.5.0.jar",
-    "url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.5.0/okhttp-4.5.0.jar"
+    "name": "okhttp-4.6.0.jar",
+    "url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.6.0/okhttp-4.6.0.jar"
   },
 
   {
-    "name": "JDA-4.1.1_138.jar",
-    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_138/JDA-4.1.1_138.jar"
+    "name": "JDA-4.1.1_145.jar",
+    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_145/JDA-4.1.1_145.jar"
   }
 ]
