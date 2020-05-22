@@ -1,7 +1,7 @@
 package com.github.alviannn.discordplatform.plugin;
 
 import com.github.alviannn.discordplatform.DiscordPlatform;
-import com.github.alviannn.sqlhelper.utils.Closer;
+import com.github.alviannn.discordplatform.closer.Closer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

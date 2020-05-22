@@ -1,10 +1,10 @@
 package com.github.alviannn.discordplatform.plugin;
 
 import com.github.alviannn.discordplatform.DiscordPlatform;
+import com.github.alviannn.discordplatform.closer.Closer;
 import com.github.alviannn.discordplatform.logger.Logger;
 import com.github.alviannn.discordplatform.scheduler.Scheduler;
 import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
-import com.github.alviannn.sqlhelper.utils.Closer;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -23,6 +25,7 @@ public class PluginManager {
 
     private final DiscordPlatform plugin;
     private final Map<String, DiscordPlugin> pluginMap = new HashMap<>();
+    private final AtomicBoolean canLoadNextPlugin = new AtomicBoolean(true);
 
     /**
      * detects all possible plugins on the plugins folder
@@ -56,8 +59,7 @@ public class PluginManager {
                 if (dependsEntry != null) {
                     InputStream dependencies = jarFile.getInputStream(dependsEntry);
                     description = PluginDescription.load(file, pluginDesc, dependencies);
-                }
-                else {
+                } else {
                     description = PluginDescription.load(file, pluginDesc, null);
                 }
             }
@@ -86,7 +88,13 @@ public class PluginManager {
      * loads a plugin (discord bot)
      */
     @SneakyThrows
-    public synchronized void loadPlugin(String name) {
+    public void loadPlugin(String name) {
+        while (!canLoadNextPlugin.get()) {
+            // keep looping until it can load the next plugin
+        }
+
+        canLoadNextPlugin.set(false);
+
         Map<String, PluginDescription> descriptionMap = this.detectPlugins();
         PluginDescription description = descriptionMap.get(name);
         if (description == null)
@@ -98,8 +106,8 @@ public class PluginManager {
         if (!pluginFile.getName().endsWith(".jar"))
             throw new IllegalAccessException("Cannot load file that aren't .jar(s)!");
 
-        ClassLoader classLoader = plugin.getClass().getClassLoader();
-        ClassLoader pluginLoader = new URLClassLoader(new URL[]{pluginFile.toURI().toURL()}, classLoader);
+        ClassLoader parentLoader = plugin.getClass().getClassLoader();
+        ClassLoader pluginLoader = new URLClassLoader(new URL[]{pluginFile.toURI().toURL()}, parentLoader);
 
         this.loadDepends(description, pluginLoader);
         Class<?> main = pluginLoader.loadClass(description.getMainClass());
@@ -108,29 +116,45 @@ public class PluginManager {
         if (!(instance instanceof DiscordPlugin))
             throw new IllegalAccessException("Failed to load main class! The class isn't implemented with " + DiscordPlugin.class.getSimpleName() + "!");
 
-        DiscordPlugin pluginInstance = (DiscordPlugin) instance;
-        pluginInstance.init(description);
+        AtomicReference<Thread> atomicThread = new AtomicReference<>();
+        atomicThread.set(new Thread(() -> {
+            Thread pluginThread = atomicThread.get();
 
-        try {
-            pluginInstance.onStart();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+            try {
+                DiscordPlugin pluginInstance = (DiscordPlugin) instance;
+                pluginInstance.init(description);
+                pluginInstance.thread = pluginThread;
 
-        pluginMap.put(description.getName(), pluginInstance);
-        Logger logger = DiscordPlatform.getLogger();
+                pluginInstance.onStart();
 
-        String loadedMessage = "Loaded plugin " + description.getName();
-        if (description.getVersion() != null)
-            loadedMessage += " version " + description.getVersion();
-        if (description.getAuthor() != null)
-            loadedMessage += " by " + description.getAuthor();
+                pluginMap.put(description.getName(), pluginInstance);
+                Logger logger = DiscordPlatform.getLogger();
 
-        logger.debug(loadedMessage);
+                String loadedMessage = "Loaded plugin " + description.getName();
+                if (description.getVersion() != null)
+                    loadedMessage += " version " + description.getVersion();
+                if (description.getAuthor() != null)
+                    loadedMessage += " by " + description.getAuthor();
+
+                logger.debug(loadedMessage);
+            } catch (Exception e) {
+                try {
+                    pluginThread.interrupt();
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+                e.printStackTrace();
+            }
+
+            canLoadNextPlugin.set(true);
+        }));
+
+        Thread thread = atomicThread.get();
+        thread.setContextClassLoader(pluginLoader);
+        thread.start();
     }
 
-    public synchronized void loadPlugins() {
+    public void loadPlugins() {
         Map<String, PluginDescription> descriptionMap = this.detectPlugins();
 
         for (PluginDescription description : descriptionMap.values())
@@ -140,7 +164,7 @@ public class PluginManager {
     /**
      * unloads a plugin (discord bot)
      */
-    public synchronized void unloadPlugin(String name) {
+    public void unloadPlugin(String name) {
         if (!pluginMap.containsKey(name))
             return;
 
@@ -150,6 +174,11 @@ public class PluginManager {
             plugin.onShutdown();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        try {
+            plugin.thread.interrupt();
+        } catch (Exception e) {
+            throw new RuntimeException("Error while terminating " + plugin.getDescription().getName() + " thread! (" + e.getMessage() + ")", e);
         }
 
         URLClassLoader loader = (URLClassLoader) plugin.getClass().getClassLoader();
@@ -171,7 +200,7 @@ public class PluginManager {
      */
     @SneakyThrows
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public synchronized void loadDepends(PluginDescription description, ClassLoader loader) {
+    public void loadDepends(PluginDescription description, ClassLoader loader) {
         DependencyHelper depHelper = new DependencyHelper(loader);
         Logger logger = Logger.getLogger(description.getName());
 

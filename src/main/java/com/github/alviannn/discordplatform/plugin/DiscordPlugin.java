@@ -11,6 +11,7 @@ public abstract class DiscordPlugin {
 
     @Getter private Logger logger;
     @Getter private PluginDescription description;
+    protected Thread thread;
 
     /**
      * this method will be called on plugin start

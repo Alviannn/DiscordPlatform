@@ -35,7 +35,7 @@ public class DiscordPlatform {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @SneakyThrows
-    public synchronized void start() {
+    public void start() {
         consoleStream = System.out;
         errorStream = System.err;
 

@@ -1,10 +1,5 @@
 [
   {
-    "name": "SQLHelper-2.5.3.jar",
-    "url": "https://jitpack.io/com/github/Alviannn/SQLHelper/2.5.3/SQLHelper-2.5.3.jar"
-  },
-
-  {
     "name": "jackson-databind-2.10.1.jar",
     "url": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.10.1/jackson-databind-2.10.1.jar"
   },
@@ -80,12 +75,12 @@
     "url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/2.6.0/okio-2.6.0.jar"
   },
   {
-    "name": "okhttp-4.6.0.jar",
-    "url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.6.0/okhttp-4.6.0.jar"
+    "name": "okhttp-4.7.2.jar",
+    "url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.7.2/okhttp-4.7.2.jar"
   },
 
   {
-    "name": "JDA-4.1.1_145.jar",
-    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_145/JDA-4.1.1_145.jar"
+    "name": "JDA-4.1.1_154.jar",
+    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.1.1_154/4.1.1_154.jar"
   }
 ]
