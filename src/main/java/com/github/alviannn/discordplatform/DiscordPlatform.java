@@ -245,19 +245,21 @@ public class DiscordPlatform {
         DiscordPlatform platform = new DiscordPlatform();
         platform.start();
 
-        InputStream stream = System.in;
-        Scanner scanner = new Scanner(stream);
+        new Thread(() -> {
+            InputStream stream = System.in;
+            Scanner scanner = new Scanner(stream);
 
-        while (scanner.hasNext()) {
-            String fullCommand = scanner.nextLine().trim();
-            String command = fullCommand.split(" ")[0].toLowerCase();
+            while (scanner.hasNext()) {
+                String fullCommand = scanner.nextLine().trim();
+                String command = fullCommand.split(" ")[0].toLowerCase();
 
-            String[] array = fullCommand.split(" ");
-            String[] args = Arrays.copyOfRange(array, 1, array.length);
+                String[] array = fullCommand.split(" ");
+                String[] args = Arrays.copyOfRange(array, 1, array.length);
 
-            platform.handleCommand(command, args);
-        }
-        AnsiConsole.systemUninstall();
+                platform.handleCommand(command, args);
+            }
+            AnsiConsole.systemUninstall();
+        }).start();
     }
 
 }
