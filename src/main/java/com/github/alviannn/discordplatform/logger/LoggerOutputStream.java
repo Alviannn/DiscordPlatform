@@ -1,6 +1,5 @@
 package com.github.alviannn.discordplatform.logger;
 
-import com.github.alviannn.discordplatform.color.ColoredWriter;
 import lombok.RequiredArgsConstructor;
 
 import java.io.ByteArrayOutputStream;
@@ -22,7 +21,6 @@ public class LoggerOutputStream extends ByteArrayOutputStream {
         if (message == null || message.trim().isEmpty() || message.trim().equals(separator))
             return;
 
-        message = ColoredWriter.format(message);
         if (level != null)
             logger.log(level, message);
         else

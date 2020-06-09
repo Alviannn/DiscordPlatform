@@ -50,7 +50,6 @@ public class ColoredWriter {
                     compile(ChatColor.RESET, Ansi.ansi().a(Ansi.Attribute.RESET).toString()),
             };
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
     public static String format(String message) {
         for (ReplacementSpecification repSpec : REPLACEMENTS) {
             ChatColor color = repSpec.color;
@@ -60,8 +59,7 @@ public class ColoredWriter {
             message = Pattern.compile(color.getType2()).matcher(message).replaceAll(replacement);
         }
 
-        String result = Ansi.ansi().eraseLine(Erase.ALL).toString() + "\r" + message + Ansi.ansi().reset().toString();
-        return result;
+        return Ansi.ansi().eraseLine(Erase.ALL).toString() + "\r" + message + Ansi.ansi().reset().toString();
     }
 
 

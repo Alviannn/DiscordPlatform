@@ -1,10 +1,10 @@
 package com.github.alviannn.discordplatform.logger;
 
 import com.github.alviannn.discordplatform.DiscordPlatform;
+import com.github.alviannn.discordplatform.closer.Closer;
 import com.github.alviannn.discordplatform.color.ChatColor;
 import com.github.alviannn.discordplatform.color.ColoredWriter;
 import lombok.AccessLevel;
-import lombok.Cleanup;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -72,15 +72,14 @@ public class Logger {
         String dateFormat = this.getDateFormat("yyyy-MM-dd");
         File logsFile = new File(logsFolder, dateFormat + ".log");
 
-        try {
+        try (Closer closer = new Closer()) {
             if (!logsFile.exists())
                 logsFile.createNewFile();
 
-            @Cleanup FileWriter fw = new FileWriter(logsFile, true);
-            @Cleanup PrintWriter writer = new PrintWriter(fw, true);
+            FileWriter fw = closer.add(new FileWriter(logsFile, true));
+            PrintWriter writer = closer.add(new PrintWriter(fw, true));
 
             writer.println(ChatColor.stripColor(message));
-            writer.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
