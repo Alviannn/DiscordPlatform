@@ -6,7 +6,7 @@
 
     <groupId>com.github.alviannn.discordplatform</groupId>
     <artifactId>DiscordPlatform</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <packaging>jar</packaging>
 
     <developers>
@@ -123,14 +123,14 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.7.2</version>
+            <version>4.8.0</version>
             <scope>provided</scope>
         </dependency>
         <!-- JDA Wrapper -->
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.0_175</version>
+            <version>4.2.0_178</version>
             <scope>provided</scope>
         </dependency>
 

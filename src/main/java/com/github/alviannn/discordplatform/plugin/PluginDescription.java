@@ -79,7 +79,7 @@ public class PluginDescription {
     }
 
     /**
-     * reformats the command aliases
+     * re-formats the command aliases
      */
     private static String[] formatAliases(String aliases) {
         if (aliases == null)

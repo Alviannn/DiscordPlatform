@@ -1,12 +1,12 @@
 package com.github.alviannn.discordplatform;
 
+import com.github.alviannn.discordplatform.closer.Closer;
 import com.github.alviannn.discordplatform.logger.Level;
 import com.github.alviannn.discordplatform.logger.Logger;
 import com.github.alviannn.discordplatform.logger.LoggerOutputStream;
 import com.github.alviannn.discordplatform.plugin.DiscordPlugin;
 import com.github.alviannn.discordplatform.plugin.PluginDescription;
 import com.github.alviannn.discordplatform.plugin.PluginManager;
-import com.github.alviannn.discordplatform.scheduler.Scheduler;
 import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -39,8 +39,6 @@ public class DiscordPlatform {
         consoleStream = System.out;
         errorStream = System.err;
 
-        AnsiConsole.systemInstall();
-
         logger = Logger.getLogger("DiscordPlatform");
         dependsFolder = new File("depends");
         pluginFolder = new File("plugins");
@@ -48,6 +46,8 @@ public class DiscordPlatform {
 
         System.setOut(new PrintStream(new LoggerOutputStream(Logger.getLogger(null), null), true));
         System.setErr(new PrintStream(new LoggerOutputStream(Logger.getLogger(null), Level.ERROR), true));
+
+        AnsiConsole.systemInstall();
 
         JsonArray depends;
         File dependsConfigFile = new File("depends.json");
@@ -58,15 +58,16 @@ public class DiscordPlatform {
             pluginFolder.mkdir();
 
         ClassLoader classLoader = this.getClass().getClassLoader();
-        try (InputStream resource = classLoader.getResourceAsStream("depends.json")) {
+        try (Closer closer = new Closer()) {
+            InputStream resource = closer.add(classLoader.getResourceAsStream("depends.json"));
+
             if (resource == null)
                 throw new NullPointerException("Cannot retrieve depends.json!");
 
             if (!dependsConfigFile.exists())
                 Files.copy(resource, dependsConfigFile.toPath());
-        }
 
-        try (FileReader reader = new FileReader(dependsConfigFile)) {
+            FileReader reader = closer.add(new FileReader(dependsConfigFile));
             depends = JsonParser.parseReader(reader).getAsJsonArray();
         }
 
@@ -79,13 +80,13 @@ public class DiscordPlatform {
             retrievedDependencies.put(depend.get("name").getAsString(), depend.get("url").getAsString());
         }
 
-        DependencyHelper depHelper = new DependencyHelper(classLoader);
+        DependencyHelper helper = new DependencyHelper(classLoader);
 
         logger.debug("Downloading dependencies...");
-        depHelper.download(retrievedDependencies, dependsFolder.toPath());
+        helper.download(retrievedDependencies, dependsFolder.toPath());
 
         logger.debug("Loading dependencies...");
-        depHelper.loadDir(dependsFolder.toPath());
+        helper.loadDir(dependsFolder.toPath());
         logger.debug("Dependencies are now loaded!");
 
         logger.debug("Loading any plugin(s)!");
@@ -104,8 +105,6 @@ public class DiscordPlatform {
             case "stop":
             case "end": {
                 pluginManager.unloadAllPlugins();
-                Scheduler.closeAll();
-
                 AnsiConsole.systemUninstall();
 
                 logger.info("Bye bye :3");
@@ -199,8 +198,10 @@ public class DiscordPlatform {
                     logger.info("Usage: reload <name>");
                     return;
                 }
-                handleCommand("unload", new String[]{args[0]});
-                handleCommand("load", new String[]{args[0]});
+
+                this.handleCommand("unload", new String[]{args[0]});
+                this.handleCommand("load", new String[]{args[0]});
+
                 break;
             }
             default: {
@@ -258,6 +259,7 @@ public class DiscordPlatform {
 
                 platform.handleCommand(command, args);
             }
+
             AnsiConsole.systemUninstall();
         }).start();
     }

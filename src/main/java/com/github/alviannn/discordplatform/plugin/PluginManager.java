@@ -3,7 +3,6 @@ package com.github.alviannn.discordplatform.plugin;
 import com.github.alviannn.discordplatform.DiscordPlatform;
 import com.github.alviannn.discordplatform.closer.Closer;
 import com.github.alviannn.discordplatform.logger.Logger;
-import com.github.alviannn.discordplatform.scheduler.Scheduler;
 import com.github.alviannn.lib.dependencyhelper.DependencyHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -89,6 +88,7 @@ public class PluginManager {
      */
     @SneakyThrows
     public void loadPlugin(String name) {
+        //noinspection StatementWithEmptyBody
         while (!canLoadNextPlugin.get()) {
             // keep looping until it can load the next plugin
         }
@@ -169,7 +169,6 @@ public class PluginManager {
             return;
 
         DiscordPlugin plugin = pluginMap.get(name);
-        Scheduler.closeAll(plugin);
         try {
             plugin.onShutdown();
         } catch (Exception e) {
@@ -232,12 +231,15 @@ public class PluginManager {
     }
 
     /**
-     * gets the exisiting plugins
+     * gets the existing plugins
      */
     public Collection<DiscordPlugin> getPlugins() {
         return pluginMap.values();
     }
 
+    /**
+     * unloads all existing plugins
+     */
     public void unloadAllPlugins() {
         List<DiscordPlugin> plugins = new ArrayList<>(this.getPlugins());
 
