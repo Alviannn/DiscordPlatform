@@ -39,6 +39,8 @@ public class DiscordPlatform {
         consoleStream = System.out;
         errorStream = System.err;
 
+        AnsiConsole.systemInstall();
+
         logger = Logger.getLogger("DiscordPlatform");
         dependsFolder = new File("depends");
         pluginFolder = new File("plugins");

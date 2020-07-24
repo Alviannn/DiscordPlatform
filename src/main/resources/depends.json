@@ -12,14 +12,18 @@
     "url": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.11.1/jackson-annotations-2.11.1.jar"
   },
 
+
+
   {
     "name": "trove4j-3.0.3.jar",
     "url": "https://repo1.maven.org/maven2/net/sf/trove4j/trove4j/3.0.3/trove4j-3.0.3.jar"
   },
   {
-    "name": "nv-websocket-client-2.9.jar",
-    "url": "https://repo1.maven.org/maven2/com/neovisionaries/nv-websocket-client/2.9/nv-websocket-client-2.9.jar"
+    "name": "nv-websocket-client-2.10.jar",
+    "url": "https://repo1.maven.org/maven2/com/neovisionaries/nv-websocket-client/2.10/nv-websocket-client-2.10.jar"
   },
+
+
 
   {
     "name": "slf4j-api-1.7.30.jar",
@@ -30,10 +34,14 @@
     "url": "https://repo1.maven.org/maven2/org/slf4j/slf4j-nop/1.7.30/slf4j-nop-1.7.30.jar"
   },
 
+
+
   {
     "name": "commons-collections4-4.4.jar",
     "url": "https://repo1.maven.org/maven2/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar"
   },
+
+
 
   {
     "name": "opus-java-api-1.0.4.jar",
@@ -48,11 +56,19 @@
     "url": "https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.5.0/jna-5.5.0.jar"
   },
 
+
+
   {
     "name": "jsr305-3.0.2.jar",
     "url": "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"
   },
 
+
+
+  {
+    "name": "annotations-19.0.0.jar",
+    "url": "https://repo1.maven.org/maven2/org/jetbrains/annotations/19.0.0/annotations-19.0.0.jar"
+  },
   {
     "name": "kotlin-stdlib-1.3.72.jar",
     "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.3.72/kotlin-stdlib-1.3.72.jar"
@@ -70,10 +86,7 @@
     "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.3.72/kotlin-stdlib-jdk8-1.3.72.jar"
   },
 
-  {
-    "name": "annotations-19.0.0.jar",
-    "url": "https://repo1.maven.org/maven2/org/jetbrains/annotations/19.0.0/annotations-19.0.0.jar"
-  },
+
 
   {
     "name": "okio-2.7.0.jar",
@@ -84,8 +97,10 @@
     "url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.8.0/okhttp-4.8.0.jar"
   },
 
+
+
   {
-    "name": "JDA-4.2.0_178.jar",
-    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.2.0_178/JDA-4.2.0_178.jar"
+    "name": "JDA-4.2.0_181.jar",
+    "url": "https://dl.bintray.com/dv8fromtheworld/maven/net/dv8tion/JDA/4.2.0_181/JDA-4.2.0_181.jar"
   }
 ]

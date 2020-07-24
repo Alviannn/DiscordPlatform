@@ -6,7 +6,7 @@
 
     <groupId>com.github.alviannn.discordplatform</groupId>
     <artifactId>DiscordPlatform</artifactId>
-    <version>1.4.3</version>
+    <version>1.4.4</version>
     <packaging>jar</packaging>
 
     <developers>
@@ -130,7 +130,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.0_178</version>
+            <version>4.2.0_181</version>
             <scope>provided</scope>
         </dependency>
 
