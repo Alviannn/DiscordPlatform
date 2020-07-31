@@ -6,7 +6,7 @@
 
     <groupId>com.github.alviannn.discordplatform</groupId>
     <artifactId>DiscordPlatform</artifactId>
-    <version>1.4.4</version>
+    <version>1.4.5</version>
     <packaging>jar</packaging>
 
     <developers>
@@ -15,7 +15,6 @@
             <roles>
                 <role>author</role>
                 <role>maintainer</role>
-                <role>developer</role>
             </roles>
         </developer>
     </developers>
@@ -29,6 +28,14 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+            </resource>
+
+            <resource>
+                <directory>${project.basedir}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                </includes>
             </resource>
         </resources>
 
