@@ -16,7 +16,7 @@ This is a discord platform program, with this now you can host several discord b
     <dependency>
         <groupId>com.github.Alviannn</groupId>
         <artifactId>DiscordPlatform</artifactId>
-        <version>1.4.3</version>
+        <version>1.4.5</version>
     </dependency>
     ```
 
@@ -73,7 +73,7 @@ name=DiscordPlatform
 # (required) the plugin main class
 main=com.github.alviannn.discordplatform.DiscordPlatform
 # (optional) the plugin version
-version=1.4.3
+version=1.4.5
 # (optional) tells the plugin author
 author=Alviann
 # (optional) the plugin description
